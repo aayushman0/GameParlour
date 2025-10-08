@@ -2,6 +2,7 @@ from tkinter import ttk, StringVar
 from db.orm import summary
 from datetime import date
 from template import Frame, DateClass, datetime_entry
+from variables import SERVICE_TYPES
 
 
 class SummaryFrame(Frame):
@@ -16,6 +17,8 @@ class SummaryFrame(Frame):
         self.total_income = StringVar()
         self.remaining_credit = StringVar()
         self.current_capital = StringVar()
+        self.no_of_services = len(SERVICE_TYPES)
+        self.income_by_type = [StringVar() for _ in range(self.no_of_services)]
 
     def main(self):
         self.add_frame.destroy()
@@ -32,6 +35,9 @@ class SummaryFrame(Frame):
         self.i
         ttk.Label(self.left_frame, text="Expense:").grid(row=self.i, column=0, sticky="e", pady=10)
         ttk.Label(self.left_frame, text="Income:").grid(row=self.i, column=0, sticky="e", pady=10)
+        for i in range(self.no_of_services):
+            t_name = list(SERVICE_TYPES.values())[i].replace(":", "")
+            ttk.Label(self.left_frame, text=f"{t_name} Income:").grid(row=self.i, column=0, sticky="e", pady=10)
         self.i = 0
         ttk.Label(self.right_frame, text="Remaining Credit:").grid(row=self.i, column=0, sticky="e", pady=10)
         ttk.Label(self.right_frame, text="Current Capital:").grid(row=self.i, column=0, sticky="e", pady=10)
@@ -49,6 +55,8 @@ class SummaryFrame(Frame):
         )
         ttk.Entry(self.left_frame, textvariable=self.total_expense, state="readonly").grid(row=self.i, column=1, sticky="ew")
         ttk.Entry(self.left_frame, textvariable=self.total_income, state="readonly").grid(row=self.i, column=1, sticky="ew")
+        for i in range(self.no_of_services):
+            ttk.Entry(self.left_frame, textvariable=self.income_by_type[i], state="readonly").grid(row=self.i, column=1, sticky="ew")
         self.i = 0
         ttk.Entry(self.right_frame, textvariable=self.remaining_credit, state="readonly").grid(row=self.i, column=1, sticky="ew")
         ttk.Entry(self.right_frame, textvariable=self.current_capital, state="readonly").grid(row=self.i, column=1, sticky="ew")
@@ -66,6 +74,8 @@ class SummaryFrame(Frame):
         filter_date_end = date(end_year, end_month, end_day)
         self.total_expense.set(summary.total_expense(filter_date_start, filter_date_end))
         self.total_income.set(summary.total_income(filter_date_start, filter_date_end))
+        for i, income in enumerate(summary.income_by_type(filter_date_start, filter_date_end)):
+            self.income_by_type[i].set(income)
 
     def refresh(self):
         current_time = date.today()
@@ -77,5 +87,7 @@ class SummaryFrame(Frame):
         self.date_end.day.set(current_time.day)
         self.total_expense.set(summary.total_expense())
         self.total_income.set(summary.total_income())
+        for i, income in enumerate(summary.income_by_type()):
+            self.income_by_type[i].set(income)
         self.remaining_credit.set(summary.remaining_credit())
         self.current_capital.set(summary.current_capital())

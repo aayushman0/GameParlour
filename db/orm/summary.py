@@ -2,6 +2,7 @@ from sqlalchemy import func
 from db.models import session, Income, Expense, Credit
 from datetime import date
 from template import number_seperator
+from variables import SERVICE_TYPES
 
 
 def total_expense(from_: date | None = None, to_: date | None = None) -> str:
@@ -36,3 +37,27 @@ def current_capital() -> str:
     paid_credit = total_current_credit - (session.query(func.sum(Credit.current_amount)).scalar() or 0)
     current_amount = total_income - (total_expense - total_current_credit) - paid_credit
     return number_seperator(current_amount)
+
+
+def income_by_type(from_: date | None = None, to_: date | None = None) -> list[str]:
+    incomes = session.query(Income).filter(Income.is_enabled.is_(True))
+    if from_:
+        incomes = incomes.filter(func.DATE(Income.date) >= from_)
+    if to_:
+        incomes = incomes.filter(func.DATE(Income.date) <= to_)
+    total = [0 for _ in SERVICE_TYPES]
+    for income in incomes:
+        i = -1
+        entry_list = [income_list.split("::") for income_list in income.income_list.split("||")]
+        for entry, price in entry_list:
+            i = i if service_type_index(entry) == -1 else service_type_index(entry)
+            total[i] += float(price)
+        total[i] -= income.discount
+    return [number_seperator(type_total) for type_total in total]
+
+
+def service_type_index(entry: str):
+    for i, s_type in enumerate(SERVICE_TYPES.values()):
+        if s_type in entry:
+            return i
+    return -1

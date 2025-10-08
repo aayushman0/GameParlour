@@ -8,6 +8,7 @@ ROW_COUNT = 23
 SERVICE_TYPES = {
     "1": "PC ",
     "2": "PS5 ",
+    "3": "PS4 ",
     "9": "Topup: ",
     "0": "Games: ",
 }
