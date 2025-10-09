@@ -35,6 +35,7 @@ class SummaryFrame(Frame):
         self.i
         ttk.Label(self.left_frame, text="Expense:").grid(row=self.i, column=0, sticky="e", pady=10)
         ttk.Label(self.left_frame, text="Income:").grid(row=self.i, column=0, sticky="e", pady=10)
+        self.i
         for i in range(self.no_of_services):
             t_name = list(SERVICE_TYPES.values())[i].replace(":", "")
             ttk.Label(self.left_frame, text=f"{t_name} Income:").grid(row=self.i, column=0, sticky="e", pady=10)
@@ -55,6 +56,7 @@ class SummaryFrame(Frame):
         )
         ttk.Entry(self.left_frame, textvariable=self.total_expense, state="readonly").grid(row=self.i, column=1, sticky="ew")
         ttk.Entry(self.left_frame, textvariable=self.total_income, state="readonly").grid(row=self.i, column=1, sticky="ew")
+        ttk.Separator(self.left_frame).grid(row=self.i, column=0, columnspan=2, sticky="ew", pady=10)
         for i in range(self.no_of_services):
             ttk.Entry(self.left_frame, textvariable=self.income_by_type[i], state="readonly").grid(row=self.i, column=1, sticky="ew")
         self.i = 0

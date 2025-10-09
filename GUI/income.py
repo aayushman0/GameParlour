@@ -254,7 +254,7 @@ class IncomeFrame(Frame):
             messagebox.showwarning("Wrong Type", "String used instead of numbers!")
             return None
         income_string = "||".join(f"{n}::{p}" for n, p in income_list)
-        income.create(customer_name, income_string, discount, price, datetime.now())
+        income.create(customer_name, income_string, discount, price, datetime.now().replace(second=0, microsecond=0))
         self.refresh()
 
     def update_income(self):

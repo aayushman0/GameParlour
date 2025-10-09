@@ -81,9 +81,9 @@ def datetime_entry(cls: DateClass, frame: ttk.Frame):
 
 def time_entry(cls: DateClass, frame: tk.Frame):
     frame.columnconfigure((0, 2), weight=1)
-    ttk.Spinbox(frame, textvariable=cls.hour, from_=0, to=23, justify="right").grid(row=0, column=0)
+    ttk.Spinbox(frame, textvariable=cls.hour, from_=0, to=23, justify="right", width=3).grid(row=0, column=0, sticky="e")
     ttk.Label(frame, text=":").grid(row=0, column=1)
-    ttk.Spinbox(frame, textvariable=cls.minute, from_=0, to=59).grid(row=0, column=2)
+    ttk.Spinbox(frame, textvariable=cls.minute, from_=0, to=59, width=3).grid(row=0, column=2, sticky="w")
 
 
 def number_seperator(num: float | int) -> str:
