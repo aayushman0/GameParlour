@@ -107,8 +107,8 @@ class ExpenseFrame(Frame):
 
     def update_expense(self):
         id = self.id.get()
-        name = self.name.get()
-        cost = self.cost.get()
+        name = self.name_edit.get()
+        cost = self.cost_edit.get()
         year = self.date.year.get()
         month = self.date.month.get()
         day = self.date.day.get()
