@@ -7,7 +7,7 @@ from variables import APP_NAME, FONT, FONT_SMALL
 root = tk.Tk()
 root.title(APP_NAME)
 root.state("zoomed")
-root.minsize(960, 540)
+root.minsize(1280, 680)
 root.option_add("*Font", FONT)
 
 # -------------------------------------------------- Style -------------------------------------------------- #
