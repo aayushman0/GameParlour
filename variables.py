@@ -8,7 +8,11 @@ ROW_COUNT = 23
 SERVICE_TYPES = {
     "1": "PC ",
     "2": "PS5 ",
-    "3": "PS4 ",
     "9": "Topup: ",
     "0": "Games: ",
+}
+
+SERVICE_MACROS = SERVICE_TYPES | {
+    "3": "PS5 2P ",
+    "4": "PS5 4P "
 }

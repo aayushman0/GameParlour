@@ -3,7 +3,7 @@ from tkinter import ttk, StringVar, messagebox
 from db.orm import income
 from datetime import datetime
 from template import Frame, DateClass, datetime_entry
-from variables import ROW_COUNT, FONT, SERVICE_TYPES
+from variables import ROW_COUNT, FONT, SERVICE_MACROS as SERVICE_TYPES
 
 
 class IncomeFrame(Frame):
