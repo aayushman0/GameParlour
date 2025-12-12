@@ -1,8 +1,9 @@
+import tkinter as tk
 from tkinter import ttk, StringVar
 from db.orm import summary
 from datetime import date
 from template import Frame, DateClass, datetime_entry
-from variables import SERVICE_TYPES
+from variables import SERVICE_TYPES, INCOME_ROW_COUNT, BS_MONTHS
 
 
 class SummaryFrame(Frame):
@@ -42,6 +43,8 @@ class SummaryFrame(Frame):
         self.i = 0
         ttk.Label(self.right_frame, text="Remaining Credit:").grid(row=self.i, column=0, sticky="e", pady=10)
         ttk.Label(self.right_frame, text="Current Capital:").grid(row=self.i, column=0, sticky="e", pady=10)
+        ttk.Separator(self.right_frame).grid(row=self.i, column=0, columnspan=2, pady=10)
+        ttk.Label(self.right_frame, text="Monthly Income:").grid(row=self.i, column=0, sticky="w", pady=10)
         self.i = 0
         date_start_frame = ttk.Frame(self.left_frame)
         date_start_frame.grid(row=self.i, column=1, sticky="ew", pady=10)
@@ -62,6 +65,14 @@ class SummaryFrame(Frame):
         self.i = 0
         ttk.Entry(self.right_frame, textvariable=self.remaining_credit, state="readonly").grid(row=self.i, column=1, sticky="ew")
         ttk.Entry(self.right_frame, textvariable=self.current_capital, state="readonly").grid(row=self.i, column=1, sticky="ew")
+        self.i
+        self.i
+        self.income_table = ttk.Treeview(self.right_frame, show="headings", selectmode="browse", columns=("Month", "Income"), height=INCOME_ROW_COUNT)
+        self.income_table.heading("Month", text="Month")
+        self.income_table.column("Month", width=30, anchor="e")
+        self.income_table.heading("Income", text="Income")
+        self.income_table.column("Income", width=70, anchor="e")
+        self.income_table.grid(row=self.i, column=0, columnspan=2, sticky="ew")
 
     def update_total(self):
         start_year = self.date_start.year.get()
@@ -74,6 +85,8 @@ class SummaryFrame(Frame):
             return None
         filter_date_start = date(start_year, start_month, start_day)
         filter_date_end = date(end_year, end_month, end_day)
+        if filter_date_end < filter_date_start:
+            filter_date_start = filter_date_end
         self.total_expense.set(summary.total_expense(filter_date_start, filter_date_end))
         self.total_income.set(summary.total_income(filter_date_start, filter_date_end))
         for i, income in enumerate(summary.income_by_type(filter_date_start, filter_date_end)):
@@ -93,3 +106,7 @@ class SummaryFrame(Frame):
             self.income_by_type[i].set(income)
         self.remaining_credit.set(summary.remaining_credit())
         self.current_capital.set(summary.current_capital())
+
+        self.income_table.delete(*self.income_table.get_children())
+        for bs_month, dates in BS_MONTHS.items():
+            self.income_table.insert('', tk.END, values=(bs_month, summary.total_income(*dates)))
