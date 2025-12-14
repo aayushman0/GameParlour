@@ -73,6 +73,7 @@ class SummaryFrame(Frame):
         self.income_table.heading("Income", text="Income")
         self.income_table.column("Income", width=70, anchor="e")
         self.income_table.grid(row=self.i, column=0, columnspan=2, sticky="ew")
+        self.income_table.bind("<Double-Button-1>", self.select_month)
 
     def update_total(self):
         start_year = self.date_start.year.get()
@@ -91,6 +92,22 @@ class SummaryFrame(Frame):
         self.total_income.set(summary.total_income(filter_date_start, filter_date_end))
         for i, income in enumerate(summary.income_by_type(filter_date_start, filter_date_end)):
             self.income_by_type[i].set(income)
+
+    def select_month(self, *args):
+        selected_month = self.income_table.selection()
+        if not selected_month:
+            return None
+        month_key = self.income_table.item(selected_month[0]).get("values", [None])[0]
+        start_date, end_date = BS_MONTHS.get(month_key, (None, None))
+        if not start_date or not end_date:
+            return None
+        self.date_start.year.set(start_date.year)
+        self.date_start.month.set(start_date.month)
+        self.date_start.day.set(start_date.day)
+        self.date_end.year.set(end_date.year)
+        self.date_end.month.set(end_date.month)
+        self.date_end.day.set(end_date.day)
+        self.update_total()
 
     def refresh(self):
         current_time = date.today()
