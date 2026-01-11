@@ -46,16 +46,14 @@ def income_by_type(from_: date | None = None, to_: date | None = None) -> list[s
     if to_:
         incomes = incomes.filter(func.DATE(Income.date) <= to_)
     total = [0 for _ in SERVICE_TYPES]
-    no_of_entry = [0 for _ in SERVICE_TYPES]
     for income in incomes:
         i = -1
         entry_list = [income_list.split("::") for income_list in income.income_list.split("||")]
         for entry, price in entry_list:
             i = i if service_type_index(entry) == -1 else service_type_index(entry)
             total[i] += float(price)
-            no_of_entry[i] += 1
         total[i] -= income.discount
-    return [f"{number_seperator(type_total)}/{count}" for type_total, count in zip(total, no_of_entry)]
+    return [number_seperator(type_total) for type_total in total]
 
 
 def service_type_index(entry: str):
