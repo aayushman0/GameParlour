@@ -41,5 +41,5 @@ BS_MONTHS = {
     "Poush 2083": (date(year=2026, month=12, day=16), date(year=2027, month=1, day=14)),
     "Magh 2083": (date(year=2027, month=1, day=15), date(year=2027, month=2, day=12)),
     "Falgun 2083": (date(year=2027, month=2, day=13), date(year=2027, month=3, day=14)),
-    "Chaitra 2083": (date(year=2027, month=3, day=14), date(year=2027, month=4, day=13)),
+    "Chaitra 2083": (date(year=2027, month=3, day=15), date(year=2027, month=4, day=13)),
 }
