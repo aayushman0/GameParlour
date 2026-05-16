@@ -10,6 +10,8 @@ FONT = ("Arial", 14)
 FONT_LARGE = ("Arial", 18, "bold")
 FONT_SMALL = ("Arial", 10)
 
+RES_X = 1280
+RES_Y = 680
 ROW_COUNT = [23]
 INCOME_ROW_COUNT = 12
 

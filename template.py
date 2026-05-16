@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, IntVar
 from dotenv import set_key
-from variables import ROW_COUNT
+from variables import ROW_COUNT, RES_X, RES_Y
 
 
 class Frame(ttk.Frame):
@@ -105,7 +105,10 @@ def save_position(window: tk.Tk) -> None:
 
 
 def on_geometry_changed(window: tk.Tk) -> None:
-    height = window.winfo_height() * 0.8
-    rows = height // 23.5
+    if window.state() != "zoomed":
+        if window.winfo_width() != RES_X or window.winfo_height() != RES_Y:
+            window.geometry(f"{RES_X}x{RES_Y}")
+    height = window.winfo_height() * 0.77
+    rows = height // 23
     if rows and rows != ROW_COUNT[0]:
         ROW_COUNT[0] = int(rows)
