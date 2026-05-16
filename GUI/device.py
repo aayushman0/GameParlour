@@ -31,7 +31,7 @@ class DeviceFrame(Frame):
             row=1, column=0, columnspan=2, sticky="ew", ipady=10
         )
 
-        self.list_table = ttk.Treeview(self.list_frame, show="headings", selectmode="browse", columns=self.table_columns, height=ROW_COUNT)
+        self.list_table = ttk.Treeview(self.list_frame, show="headings", selectmode="browse", columns=self.table_columns, height=ROW_COUNT[0])
         for col_name, col_width, col_align in zip(self.table_columns, self.table_columns_width, self.table_columns_align):
             self.list_table.heading(col_name, text=col_name)
             self.list_table.column(col_name, width=col_width, anchor=col_align)

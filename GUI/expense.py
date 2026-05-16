@@ -38,7 +38,7 @@ class ExpenseFrame(Frame):
             row=self.i, column=0, columnspan=2, sticky="ew", ipady=10
         )
 
-        self.list_table = ttk.Treeview(self.list_frame, show="headings", selectmode="browse", columns=self.table_columns, height=ROW_COUNT)
+        self.list_table = ttk.Treeview(self.list_frame, show="headings", selectmode="browse", columns=self.table_columns, height=ROW_COUNT[0])
         for col_name, col_width, col_align in zip(self.table_columns, self.table_columns_width, self.table_columns_align):
             self.list_table.heading(col_name, text=col_name)
             self.list_table.column(col_name, width=col_width, anchor=col_align)
@@ -159,7 +159,7 @@ class ExpenseFrame(Frame):
 
     def update_table(self):
         expenses, expense_count = expense.get_paginated(self.page_no)
-        self.total_pages = (expense_count - 1) // ROW_COUNT + 1
+        self.total_pages = (expense_count - 1) // ROW_COUNT[0] + 1
         self.page_no_label.config(text=f"{self.page_no}/{self.total_pages}")
         self.list_table.delete(*self.list_table.get_children())
         for row in expenses:

@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, IntVar
+from dotenv import set_key
+from variables import ROW_COUNT
 
 
 class Frame(ttk.Frame):
@@ -95,3 +97,15 @@ def number_seperator(num: float | int) -> str:
         for i in range((len(string_int[:-3])+1)//2):
             full_string = string_int[-(3+2*(i+1)):-(3+2*i)] + "," + full_string
     return full_string + "." + string_dec
+
+
+def save_position(window: tk.Tk) -> None:
+    set_key(".env", "OFFSET", f"+{window.winfo_x()}+{window.winfo_y()}")
+    window.destroy()
+
+
+def on_geometry_changed(window: tk.Tk) -> None:
+    height = window.winfo_height() * 0.8
+    rows = height // 23.5
+    if rows and rows != ROW_COUNT[0]:
+        ROW_COUNT[0] = int(rows)

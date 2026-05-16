@@ -1,23 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
 from GUI import device, expense, income, credit, summary, timer
-from variables import APP_NAME, FONT, FONT_SMALL
-from dotenv import dotenv_values, set_key
+from variables import APP_NAME, FONT, FONT_SMALL, env
+from template import save_position, on_geometry_changed
 
-
-env = dotenv_values(".env")
-
-def save_position() -> None:
-    set_key(".env", "OFFSET", f"+{root.winfo_x()}+{root.winfo_y()}")
-    root.destroy()
 
 root = tk.Tk()
 root.title(APP_NAME)
 root.minsize(1280, 680)
+root.bind("<Configure>", lambda _: on_geometry_changed(root))
 offset = env.get("OFFSET", None)
 if offset:
     root.geometry(offset)
-root.protocol("WM_DELETE_WINDOW", save_position)
+root.protocol(name="WM_DELETE_WINDOW", func=lambda: save_position(root))
 root.state("zoomed")
 root.option_add("*Font", FONT)
 

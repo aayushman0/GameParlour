@@ -40,5 +40,5 @@ def get_paginated(page: int, show_deleted: bool = False) -> tuple[list[Expense],
     if not show_deleted:
         expenses = expenses.filter(Expense.is_enabled.is_(True))
     count: int = expenses.count()
-    paginated_expenses: list[Expense] = expenses.slice((page - 1) * ROW_COUNT, page * ROW_COUNT)
+    paginated_expenses: list[Expense] = expenses.slice((page - 1) * ROW_COUNT[0], page * ROW_COUNT[0])
     return paginated_expenses, count

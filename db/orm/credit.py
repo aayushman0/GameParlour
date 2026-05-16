@@ -54,5 +54,5 @@ def get_paginated(page: int, provider: str | None = None, show_cleared: bool = F
     if not show_cleared:
         credits = credits.filter(Credit.current_amount > 0)
     count: int = credits.count()
-    paginated_credits: list[Credit] = credits.slice((page - 1) * ROW_COUNT, page * ROW_COUNT)
+    paginated_credits: list[Credit] = credits.slice((page - 1) * ROW_COUNT[0], page * ROW_COUNT[0])
     return paginated_credits, count

@@ -42,5 +42,5 @@ def get_paginated(page: int, show_deleted: bool = False) -> tuple[list[Income], 
     if not show_deleted:
         incomes = incomes.filter(Income.is_enabled.is_(True))
     count: int = incomes.count()
-    paginated_incomes: list[Income] = incomes.slice((page - 1) * ROW_COUNT, page * ROW_COUNT)
+    paginated_incomes: list[Income] = incomes.slice((page - 1) * ROW_COUNT[0], page * ROW_COUNT[0])
     return paginated_incomes, count

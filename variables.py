@@ -1,11 +1,16 @@
 from datetime import date
+from dotenv import dotenv_values
+
+
+env = dotenv_values(".env")
 
 APP_NAME = "Arkane Game Zone"
 
 FONT = ("Arial", 14)
 FONT_LARGE = ("Arial", 18, "bold")
 FONT_SMALL = ("Arial", 10)
-ROW_COUNT = 23
+
+ROW_COUNT = [23]
 INCOME_ROW_COUNT = 12
 
 SERVICE_TYPES = {
