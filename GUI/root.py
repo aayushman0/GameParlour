@@ -13,7 +13,7 @@ if offset:
     root.geometry(offset)
 root.protocol(name="WM_DELETE_WINDOW", func=lambda: save_position(root))
 root.bind("<Configure>", lambda _: on_geometry_changed(root))
-root.state("zoomed")
+root.attributes("-zoomed", True)
 root.update_idletasks()
 root.option_add("*Font", FONT)
 
